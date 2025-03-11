@@ -1,0 +1,212 @@
+   <section>
+        <div class="circle"></div>
+        <header>
+            <a href="#"><img src="./img/logo.png" class="logo"></a>
+            {{!-- <ul>
+                <li><a href="">Trang chủ</a></li>
+                <li><a href="">Menu</a></li>
+                <li><a href="">Mới</a></li>
+                <li><a href="">Liên hệ</a></li>
+            </ul> --}}
+        </header>
+        <div class="content">
+
+            
+            <div class="textBox">
+                <form action="">
+                <h2 class=''>ĐẶT TRƯỚC. NHẬN NGAY TRONG <span> <br>5 Giây</span></h2>
+                  <h2 class=''>ĐẶT NGAY. NHẬN TRƯỚC <span> <br>30 Phút <p class='orderNowNote'>Sau 30 Phút giảm giá 30% (Bán kính 2km)  <span class=''><a href="https://maps.app.goo.gl/CArytw1eLrFbUwU89" target='_blank'>xem khoảng cách</a></span></p></span> </h2>
+
+                <div style='gap:10px' class="d-flex justify-content-between">
+                  <div class="form-floating mb-2">
+                    <input type="email" class="form-control" id="userName" placeholder="name@example.com">
+                    <label for="userName">Tên</label>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="userPhoneNumber" placeholder="Số điện thoại">
+                            <label for="userPhoneNumber">Số điện thoại</label>
+                        </div>
+                </div>
+
+ <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="preOrder">
+                    <label class="form-check-label" for="preOrder">
+                      Đặt trước
+                    </label>
+                  </div>
+                <div class='orderDateTime'>
+                   <div style='gap:10px' class="d-flex justify-content-between">
+                  <div class="form-floating mb-2">
+                    <input  class="p-3" id="datepicker" width="" />
+                    
+                    <label class='datepicker-label' for="datepicker">Ngày nhận</label>
+
+
+
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input id='timepicker' type="time" class="form-control" value="6:05 Sáng" />
+                        <label for="timepicker">Giờ nhận</label>
+                      
+                    </div>
+                </div>
+                     <div class="alert alert-warning small-text" role="alert">
+                            Lưu ý: Đặt trước quý khách sẽ <span class='fw-bold'>nhận tại quầy</span> theo thời gian khách chọn
+                        </div>
+                </div>
+               
+               
+                 
+
+              <div class="form-floating mb-2">
+                    <input type="email" class="form-control" id="userAdress" placeholder="">
+                    <label for="userName">Địa chỉ</label>
+                        </div>
+                          <div class="alert alert-warning small-text" role="alert">
+                            Lưu ý: Thời gian hoạt động từ <span class='fw-bold'>6:00 AM đến 9:00 AM</span>
+                        </div>
+                            <div class="mb-2">
+                              
+                              <textarea placeholder='Ví dụ: Ít đường, Ít sữa, upsize' class="form-control" id="userNote" rows="3"></textarea>
+                            </div>
+
+                            <div>
+
+                            </div>
+
+                             
+                              <div class='payment'>
+                                <table class="table table-light">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Bill</th>
+                                      <th scope="col">Tên SP</th>
+                                      <th scope="col">SL</th>
+                                      <th scope="col">Thành Tiền</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody class='productList'>
+                                    {{!-- <tr class='productItem blackcoffee'>
+                                      <th scope="row">1</th>
+                                      <td>Cà Phê Đen</td>
+                                      <td><input type="number" min='0' value='0' class="" id=""></td>
+                                      <td class='totalAmount'><span class='price'>0</span></td>
+                                    </tr>
+                                    <tr class='productItem milkcoffee'>
+                                      <th scope="row">2</th>
+                                      <td>Cà Phê Sữa</td>
+                                      <td><input type="number" min='0'  value='0' class="" id=""></td>
+                                      <td class='totalAmount'><span class='price'>0</span></td>
+                                    </tr>
+                                    <tr class='productItem saltcoffee'>
+                                      <th scope="row">3</th>
+                                      <td>Cà Phê Muối</td>
+                                      <td><input type="number" value='0' min='0' class="" id=""></td>
+                                      <td class='totalAmount'><span class='price'>0</span></td>
+                                    </tr>
+                                    <tr class='productItem whitecoffee'>
+                                      <th scope="row">4</th>
+                                      <td>Bạc Xỉu</td>
+                                      <td><input type="number" min='0' class="" value='0' id=""></td>
+                                      <td class='totalAmount'><span class='price'>0</span></td>
+                                    </tr> --}}
+                                    <tr>
+                                      <th scope="row"></th>
+                                      <td></td>
+                                      <td></td>
+                                      <td class='bold-text'>Tổng: <span class="finalMoney">0</span></td>
+                                    </tr>
+                                    
+                                   
+                                  </tbody>
+                                </table>
+                                
+                              </div>
+                              <div class="orderBtnWrapper">
+
+                                <div>
+                                    <div class="orderBtn">Đặt ngay</div>
+                                </div>
+
+                                <div>
+                                       <p id='billID'>
+                                            <span></span>
+                                       </p>
+                                       <p id='noteBill'></p>
+
+                                        <img src="./img/momo-qr.jpg" alt="" class="momo-qr">
+                                </div>
+                               
+                                
+
+
+                              </div>
+        
+
+
+
+                      </div>
+
+                     
+                </form>
+            </div>
+            <div class="imgBox">
+                <img src="./img/img1.png" class="starbucks">
+                <ul class="thumb">
+                    <li><p href="."><img src="./img/thumb1.png" onclick="imgSlider('./img/img1.png'); changeCircleColor('#000000') " ></p></li>
+                    <li><p href="."><img src="./img/thumb2.png" onclick="imgSlider('./img/img2.png'); changeCircleColor('#854836') " ></p></li>
+                    <li><p href="."><img src="./img/thumb3.png" onclick="imgSlider('./img/img3.png',15); changeCircleColor('#FFB22C') " ></p></li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        
+        
+        {{!-- <ul class="sci">
+            <li><a href="#"><img src="./img/facebook.png"></a></li>
+            <li><a href="#"><img src="./img/twitter.png"></a></li>
+            <li><a href="#"><img src="./img/instagram.png"></a></li>
+        </ul> --}}
+    </section>
+    <div class='section'>
+
+      <div>
+        <h2>Hướng dẫn đặt hàng</h2>
+        <ul class="progressbar">
+          <li class="complete">Bước 1: Điền thông tin
+            <div class="progressbar-content">
+              <p> Vui lòng điền đẩy đủ thông tin Họ và Tên, Số điện thoại và thời gian nhận hàng</p>
+            </div>
+          </li>
+          <li class="complete">Bước 2: Chọn sản phẩm 
+            <div class="progressbar-content">
+              <p>Chọn loại sản phẩm và số lượng sản phẩm bạn cần hệ thống sẽ tự động tính giá trị đơn hàng</p>
+            </div>
+          </li>
+          <li class="complete">Bước 3: Đặt hàng
+            <div class="progressbar-content">
+              <p>Bấm vào nút đặt hàng thông tin đơn hàng của bạn sẽ được gửi đến người bán</p>
+            </div>
+          </li>
+          <li class="complete">Bước 4: Thanh toán
+            <div class="progressbar-content">
+              <p>Bạn quét mã QR thanh toán hoặc chuyển tiền vào tài khoảng Vietcombank 0271001082592 TRAN MINH NHAN với nội dung chuyển khoảng là mã đơn hàng được gửi về trong hóa đơn</p>
+            </div>
+          </li>
+          <li class="complete">Bước 5: Nhận hàng
+            <div class="progressbar-content">
+              <p>Bạn đến điểm bán ở dưới bản đồ địa chỉ là "" để nhận hàng</p>
+            </div>
+          </li>
+        </ul>
+
+    </div>
+    <div class="google-map">
+   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.7478447687668!2d106.70624097363697!3d10.906758156779043!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d790f9d2b5df%3A0x2f8303b0283f4a2!2zxJAuIEzDoWkgVGhpw6p1IDQ5LCBMw6FpIFRoacOqdSwgVGh14bqtbiBBbiwgQsOsbmggRMawxqFuZywgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1741659965733!5m2!1svi!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
+
+    </div>
+   

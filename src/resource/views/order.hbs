@@ -1,0 +1,106 @@
+<table class="table order">
+  <thead>
+    <tr>
+      <th scope="col">Ngày đặt hàng</th>
+      <th scope="col">Mã ĐH</th>
+      <th scope="col">Tên KH</th>
+      <th scope="col">SDT</th>
+      <th scope="col">Sản Phẩm</th>
+      <th scope="col">Thời gian nhận</th>
+    </tr>
+  </thead>
+  <tbody>
+   
+       {{#each allOrder}}
+          <tr class='order-Item'>
+
+            <td>{{this.createdAt}}</td>
+            
+            <td>{{this.orderCode}}</td>
+            <td>{{this.userInfor.userName}}</td>
+            <td>{{this.userInfor.userPhoneNumber}}</td>
+            <td>
+              
+              
+               {{#each this.productInfor}}
+                      <p>{{this.productName}}: {{this.qality}}</p>
+                {{/each}}
+              
+            </td>
+
+            <td>{{this.datepicker}} {{this.timepicker}}</td>
+
+
+            
+               
+
+
+            <td>{{this.cartItemSize}}</td>
+            <td>{{this.cartItemColor}}</td>
+            <td>
+              <button data-orderStatus='{{this.status}}' data-orderId='{{this.orderCode}}' class='order-status-btn btn-color'>{{this.status}}</button>
+            </td>
+
+        </tr>
+        {{/each}}
+
+  </tbody>
+</table>
+
+<audio id="orderSound" src="/audio/notification-6175.mp3">123</audio>
+<script>
+ let controller = new AbortController();
+
+
+
+  
+async function checkNewOrder() {
+  let userInteracted = false;
+
+  function enableSound() {
+    userInteracted = true;
+    console.log(userInteracted);
+  }
+
+  document.addEventListener("click", enableSound);
+  document.addEventListener("keydown", enableSound);
+  document.addEventListener("scroll", enableSound);
+   if (!userInteracted) return; // Chỉ kiểm tra nếu người dùng đã tương tác
+    try {
+        // Hủy request cũ nếu có
+        controller.abort();
+        controller = new AbortController();
+
+        const currentOrderNum = document.querySelectorAll('.order-Item').length;
+
+        const response = await fetch(`/api/check-new-order`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ currentOrderNum }),
+            signal: controller.signal // Gắn signal để có thể hủy request
+        });
+
+        const data = await response.json();
+
+        if (data.newOrder) {
+
+            const audio = new Audio('/audio/notification-6175.mp3');
+            audio.play().catch(error => console.log("Lỗi phát âm thanh:", error));
+
+            setTimeout(()=> {
+                location.reload();
+
+            },5000)
+
+        }
+    } catch (error) {
+        if (error.name !== "AbortError") {
+            console.error("Lỗi khi kiểm tra đơn hàng:", error);
+        }
+    }
+}
+
+// Kiểm tra mỗi 10 giây, nhưng đảm bảo chỉ có 1 request đang chạy
+setInterval(checkNewOrder, 1000);
+
+</script>

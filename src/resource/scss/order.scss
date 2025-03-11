@@ -1,0 +1,42 @@
+
+.orderDateTime {
+    display: none;
+    transition: all linear 1s 1s;
+
+}
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.orderDateTime.active {
+    display: block;
+    animation: fadeSlideIn linear  0.4s;
+    
+}
+
+#preOrder {
+    cursor: pointer;
+}
+.orderNowNote {
+    font-size: 15px;
+    a {
+        font-size: 10px;
+        line-height: 0;
+        color:#FFB22C;
+        text-decoration: none;
+    }
+}
+.google-map {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}

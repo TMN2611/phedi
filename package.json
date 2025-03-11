@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3",
+    "moment": "^2.30.1",
+    "mongoose": "^8.10.1",
+    "mongoose-slug-generator": "^1.0.4",
+    "node-sass": "^7.0.1",
+    "socket.io": "^4.8.1"
+  },
+  "name": "coursenodejsf8",
+  "version": "1.0.0",
+  "description": "learn nodejs in f8",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+
+    "watch-sass": "node-sass --watch src/resource/scss/ -o src/public/css/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "minhnhan",
+  "license": "ISC",
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}
