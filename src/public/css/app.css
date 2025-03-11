@@ -397,12 +397,15 @@ input:focus, textarea:focus {
   }
 }
 @media screen and (max-width: 500px) {
+  .circle {
+    margin-top: 150%;
+  }
   header {
     justify-content: center;
   }
   section {
     flex-direction: column;
-    padding: 10px 10px;
+    padding: 0px;
     font-size: 14px;
   }
   .content {
@@ -418,7 +421,7 @@ input:focus, textarea:focus {
     width: 200px;
   }
   form {
-    padding: 30px 5px 10px;
+    padding: 30px 10px 10px;
   }
   .section {
     margin-top: 80px;
