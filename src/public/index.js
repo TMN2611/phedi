@@ -1,18 +1,5 @@
 
 
-  const billIDcopyEmlement = document.querySelector('.billIDcopy');
-const billIDcontentEmlement = document.querySelector('.billIDcontent');
-
-
-if(billIDcopyEmlement) {
-  
-    billIDcopyEmlement.addEventListener('click',()=> {
-      // Copy the text inside the text field
-    navigator.clipboard.writeText(billIDcontentEmlement.innerText);
-      // Alert the copied text
-      alert("Đã copy: " + billIDcontentEmlement.innerText);
-    })
-}
 
 
 
@@ -424,3 +411,15 @@ if(preOrderCheckBox) {
   
 
 
+const billIDcopyEmlement = document.querySelector('.billIDcopy');
+const billIDcontentEmlement = document.querySelector('.billIDcontent');
+
+if(billIDcopyEmlement) {
+
+  billIDcopyEmlement.addEventListener('click',()=> {
+    // Copy the text inside the text field
+  navigator.clipboard.writeText(billIDcontentEmlement.innerText);
+    // Alert the copied text
+    alert("Đã copy: " + billIDcontentEmlement.innerText);
+  })
+}
