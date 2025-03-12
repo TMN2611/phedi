@@ -3,7 +3,7 @@ const axios = require('axios');
 async function keepOnlineRenDerApp() {
     // Hàm gọi API
         async function fetchDataFromAPI() {
-            const apiUrl = 'https://phedi.onrender.com';
+            const apiUrl = 'https://phedi.shop/';
 
             try {
             const response = await axios.get(apiUrl);
