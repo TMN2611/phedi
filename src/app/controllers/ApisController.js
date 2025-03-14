@@ -62,6 +62,10 @@ class ApisController {
 
 }
 
+  async isDiscount(req, res) {
+    res.json({discount:10})
+  }
+
 
  
 }

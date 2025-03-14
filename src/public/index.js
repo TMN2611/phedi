@@ -67,7 +67,7 @@
     }
   
     if (bill.length > 0) {
-      const billNoteElement = document.querySelector("#noteBill");
+      const productBillElement = document.querySelector("#productBill");
       const billIDElement = document.querySelector("#billID");
   
   
@@ -97,9 +97,46 @@
   
      
   
-      html = html.concat(`Bạn cần thanh toán ${finalMoney * priceGrandOpening}`)
+      // html = html.concat(`Bạn cần thanh toán ${finalMoney * priceGrandOpening}`)
   
-      billNoteElement.innerHTML = html.join('');
+      productBill.innerHTML = html.join('');
+
+
+
+
+      async function applyDiscount(bill) {
+        try {
+            // Gọi API kiểm tra giảm giáapi
+            let response = await fetch("api/check-discount/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+    
+            let data = await response.json();
+            console.log("🚀 ~ applyDiscount ~ data:", data)
+    
+            let discountPercent = data.discount || 0; // Nếu không có giảm giá thì discount = 0
+            let finalMoney = 0;
+    
+            // Tính tổng tiền từ bill
+            bill.forEach(function(item) {
+                finalMoney += Number(item.qality);
+            });
+    
+            let discountAmount = (finalMoney * priceGrandOpening * discountPercent) / 100;
+            let totalAfterDiscount = finalMoney * priceGrandOpening - discountAmount;
+    
+            // Cập nhật hiển thị trên giao diện
+            document.getElementById("noteBill").innerHTML = `Bạn cần thanh toán ${totalAfterDiscount} (Đã giảm ${discountAmount}) <span class='text-yellow-bold'>Giảm ${discountPercent}%</span>`;
+    
+        } catch (error) {
+            console.error("Lỗi khi gọi API giảm giá:", error);
+        }
+    }
+    applyDiscount(bill);
+    
     }
   }
 
@@ -146,7 +183,7 @@
         const datepicker = document.querySelector('#datepicker').value
         const timepicker = document.querySelector('#timepicker').value
  
-        const userAddress = document.querySelector('#userAdress').value
+        // const userAddress = document.querySelector('#userAdress').value
 
         const userNote = document.querySelector('#userNote').value
 
@@ -209,9 +246,9 @@
               alert('Quên nhập thời gian nhận hàng kìa ní,');
               break;
       
-          case !userAddress:
-              alert('Vui lòng nhập địa chỉ nhận hàng ạ ^.^');
-              break;
+          // case isPreOrder === true && !userAddress:
+          //     alert('Vui lòng nhập địa chỉ nhận hàng ạ ^.^');
+          //     break;
       
           case !isAddproduct:
               alert('Vui lòng đặt tối thiểu 1 sản phẩm ạ khách yêu');
@@ -222,14 +259,13 @@
                   userInfor,
                   productInfor,
                   note: userNote,
-                  userAddress,
                   datepicker,
                   timepicker,
                   isPreOrder
               };
       
               function order(orderData) {
-                  fetch('/order/handle-order', {
+                  fetch('/2205/handle-order', {
                       method: 'POST',
                       headers: {
                           'Accept': 'application/json',
@@ -296,6 +332,7 @@
 	};
 
 	$.datepicker.setDefaults($.datepicker.regional["vi-VN"]);
+
 });
 
 
@@ -423,3 +460,16 @@ if(billIDcopyEmlement) {
     alert("Đã copy: " + billIDcontentEmlement.innerText);
   })
 }
+
+
+document.getElementById("timepicker").addEventListener("change", function() {
+  let selectedTime = this.value; // Lấy giá trị giờ đã chọn
+  let minTime = "06:00";
+  let maxTime = "09:00";
+
+  if (selectedTime < minTime) {
+      this.value = minTime;
+  } else if (selectedTime > maxTime) {
+      this.value = maxTime;
+  }
+});

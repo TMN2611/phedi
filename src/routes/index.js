@@ -8,7 +8,7 @@ function route(app) {
   // http method
 
   app.use('/news', newsRouter);
-  app.use('/order', ordersRouter);
+  app.use('/2205', ordersRouter);
   app.use('/api', apisRouter);
 
   app.use('/', siteRouter);

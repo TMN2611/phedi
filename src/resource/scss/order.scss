@@ -4,6 +4,11 @@
     transition: all linear 1s 1s;
 
 }
+.unactive{
+    display: none;
+    transition: all linear 1s 1s;
+
+}
 @keyframes fadeSlideIn {
     from {
         opacity: 0;

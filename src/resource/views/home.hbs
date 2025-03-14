@@ -15,7 +15,8 @@
             <div class="textBox">
                 <form action="">
                 <h2 class=''>ĐẶT TRƯỚC. NHẬN NGAY TRONG <span> <br>5 Giây</span></h2>
-                  <h2 class=''>ĐẶT NGAY. NHẬN TRƯỚC <span> <br>30 Phút <p class='orderNowNote'>Sau 30 Phút giảm giá 30% (Bán kính 2km)  <span class=''><a href="https://maps.app.goo.gl/CArytw1eLrFbUwU89" target='_blank'>xem khoảng cách</a></span></p></span> </h2>
+                  <h2 class=''><span>GIẢM 10%</span> KHI ĐẶT TRƯỚC QUA <span> <br>PHEDI.SHOP</span></h2>
+                  <h2 class='d-none'>ĐẶT NGAY. NHẬN TRƯỚC <span> <br>30 Phút <p class='orderNowNote'>Sau 30 Phút giảm giá 30% (Bán kính 2km)  <span class=''><a href="https://maps.app.goo.gl/CArytw1eLrFbUwU89" target='_blank'>xem khoảng cách</a></span></p></span> </h2>
 
                 <div style='gap:10px' class="d-flex justify-content-between">
                   <div class="form-floating mb-2">
@@ -29,13 +30,13 @@
                         </div>
                 </div>
 
- <div class="form-check">
+ <div class="form-check d-none">
                     <input class="form-check-input" type="checkbox" value="" id="preOrder">
                     <label class="form-check-label" for="preOrder">
                       Đặt trước
                     </label>
                   </div>
-                <div class='orderDateTime'>
+                <div class='orderDateTime active'>
                    <div style='gap:10px' class="d-flex justify-content-between">
                   <div class="form-floating mb-2">
                     <input  class="p-3" id="datepicker" width="" />
@@ -45,11 +46,10 @@
 
 
                     </div>
-                    <div class="form-floating mb-2">
-                        <input id='timepicker' type="time" class="form-control" value="6:05 Sáng" />
-                        <label for="timepicker">Giờ nhận</label>
-                      
-                    </div>
+                 <div class="form-floating mb-2">
+                    <input id="timepicker" type="time" class="form-control" min="06:00" max="09:00" required />
+                    <label for="timepicker">Giờ nhận</label>
+                </div>
                 </div>
                      <div class="alert alert-warning small-text" role="alert">
                             Lưu ý: Đặt trước quý khách sẽ <span class='fw-bold'>nhận tại quầy</span> theo thời gian khách chọn
@@ -58,11 +58,11 @@
                
                
                  
-
+{{!-- 
               <div class="form-floating mb-2">
                     <input type="email" class="form-control" id="userAdress" placeholder="">
                     <label for="userName">Địa chỉ</label>
-                        </div>
+                        </div> --}}
                           <div class="alert alert-warning small-text" role="alert">
                             Lưu ý: Thời gian hoạt động từ <span class='fw-bold'>6:00 AM đến 9:00 AM</span>
                         </div>
@@ -133,6 +133,7 @@
                                        <p id='billID'>
                                             <span></span>
                                        </p>
+                                       <p id='productBill'></p>
                                        <p id='noteBill'></p>
 
                                         <img src="./img/momo-qr.jpg" alt="" class="momo-qr">

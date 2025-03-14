@@ -2,7 +2,7 @@ const OrderModel = require("../models/Order")
 const { mongooseToObject ,mutipleMongooseToObject} = require('../../util/mongoose');
 const { numberToMoney } = require('../../util/numberToMoney')
 
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const {exportTimeString} = require('../../util/time')
   const path = require('path')
@@ -13,9 +13,38 @@ class OrdersController {
   //  [GET]  / checkouts
 
  async index(req, res) {
+  const filter = req.params.filter; // Lấy giá trị filter từ URL
+  console.log("🚀 ~ OrdersController ~ index ~ filter:", filter)
 
     // find all documents
-    let allOrder = await OrderModel.find({});
+
+
+    let allOrder =[]
+    const today = moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY");
+    const tomorrow = moment().tz("Asia/Ho_Chi_Minh").add(1, 'day').format("DD/MM/YYYY");
+
+    const todayStart = moment().tz("Asia/Ho_Chi_Minh").startOf('day').toDate();
+    const todayEnd = moment().tz("Asia/Ho_Chi_Minh").endOf('day').toDate();
+
+if (filter === 'today') {
+    // Lọc đơn hàng có ngày nhận hôm nay
+    allOrder = await OrderModel.find({ datepicker: today });
+} else if (filter === 'tomorrow') {
+    // Lọc đơn hàng có ngày nhận ngày mai
+    allOrder = await OrderModel.find({ datepicker: tomorrow });
+} 
+else if (filter === 'orderAtToday') {
+     // Lọc đơn hàng được tạo trong ngày hôm nay
+     allOrder = await OrderModel.find({ 
+      createdAt: { $gte: todayStart, $lt: todayEnd } 
+  });
+} 
+
+else {
+    // Nếu không có filter, lấy tất cả đơn hàng
+    allOrder = await OrderModel.find({});
+}
+    
     let allOrderList = mutipleMongooseToObject(allOrder);
 
     allOrderList = allOrderList.map(function(order) {
