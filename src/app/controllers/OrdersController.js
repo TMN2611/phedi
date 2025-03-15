@@ -39,6 +39,11 @@ else if (filter === 'orderAtToday') {
       createdAt: { $gte: todayStart, $lt: todayEnd } 
   });
 } 
+else if (filter === 'all') {
+     // Lọc đơn hàng được tạo trong ngày hôm nay
+     allOrder = await OrderModel.find({});
+
+} 
 
 else {
     // Nếu không có filter, lấy tất cả đơn hàng
