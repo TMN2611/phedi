@@ -1,6 +1,5 @@
 
 async function exportTimeString(time) {
-    console.log(time,123)
     let date = ("0" + time.getDate()).slice(-2);
     let month = ("0" + (time.getMonth() + 1)).slice(-2);
     let year = time.getFullYear();
@@ -11,7 +10,6 @@ async function exportTimeString(time) {
     const orderDate = ` [ ${date} - ${month} - ${year} ]`;
     const orderTime = `${hours}h - ${minutes}p`;
     
-    console.log("🚀 ~ file: time.js:14 ~ exportTimeString ~ orderTime:", orderTime)
     return {orderDate,orderTime};
 }
 

@@ -11,7 +11,6 @@ class ApisController {
 
 
       let { status, orderCode} = req.body;
-      console.log("🚀 ~ ApisController ~ updateOrderStatus ~ orderCode:", status)
 
       try {
         
@@ -38,7 +37,6 @@ class ApisController {
 
 
     let { currentOrderNum} = req.body;
-    console.log("🚀 ~ ApisController ~ checkNewOrder ~ currentOrderNum:", currentOrderNum)
 
     try {
       

@@ -3,7 +3,6 @@ class SiteController {
   index(req, res) {
 
     const DISCOUNTPERCENT = Number(process.env.DISCOUNTPERCENT)
-    console.log("🚀 ~ SiteController ~ index ~ DISCOUNTPERCENT:", DISCOUNTPERCENT)
     res.render('home',{DISCOUNTPERCENT});
   }
 

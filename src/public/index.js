@@ -55,18 +55,15 @@ return discountPercent;
 
           const data = await checkGrandOpening();
               const isGrandOpening = JSON.parse(data.isgrandOpening);
-                console.log(isGrandOpening)
 
               let totalAmount
 
               const price = e.target.dataset.price;
 
               if(isGrandOpening) {
-                 console.log('khai trương')
                 totalAmount= e.target.value * priceGrandOpening;
               }
               else {
-                console.log('k  khai trương')
 
                 if(price === "13000") {
                   totalAmount= e.target.value * blackCoffeePrice;
@@ -103,9 +100,7 @@ return discountPercent;
 
 
               const finalMoneyElement = document.querySelector('.finalMoney');
-              console.log("🚀 ~ productAmount.addEventListener ~ finalMoneyElement:", finalMoneyElement)
               const totalElement = document.querySelector('.total');
-              console.log("🚀 ~ productAmount.addEventListener ~ totalElement:", totalElement)
 
               finalMoneyElement.innerText = `${finalPrice}`
               totalElement.innerText = `${total}`
@@ -125,7 +120,6 @@ return discountPercent;
   const bill = JSON.parse(localStorage.getItem('bill'));
 
   const BillIDStorageValue = localStorage.getItem('billID')
-  console.log("🚀 ~ BillIDStorageValue:", typeof BillIDStorageValue)
   let billID;
   if(BillIDStorageValue !== 'undefined') { 
      billID = JSON.parse(BillIDStorageValue);
@@ -144,7 +138,6 @@ return discountPercent;
   
   
       
-      console.log("🚀 ~ billNoteElement:", billIDElement)
       if(billID) {
         billIDElement.innerHTML = `Mã đơn hàng: <span class='billIDcontent'>${billID} <span class='billIDcopy'><i class="fa-regular fa-copy"></i> </span></span>`
       }
@@ -187,7 +180,6 @@ return discountPercent;
             });
     
             let data = await response.json();
-            console.log("🚀 ~ applyDiscount ~ data:", data)
     
             let discountPercent = data.discount || 0; // Nếu không có giảm giá 
             async function calcOrderTotal(bill, discountPercent,priceGrandOpening) {
@@ -224,8 +216,6 @@ return discountPercent;
               return {total,finalPrice,amountIsReduced};
             }
             const {finalPrice,total,amountIsReduced} = await calcOrderTotal(bill, discountPercent,priceGrandOpening);
-            console.log("🚀 ~ applyDiscount ~ finalPrice:", finalPrice)
-            console.log("🚀 ~ applyDiscount ~ total:", total)
     
             //Cập nhật hiển thị trên giao diện
             document.getElementById("noteBill").innerHTML = `Bạn cần thanh toán <span class='text-yellow-bold'>${finalPrice}</span> (Đã giảm ${amountIsReduced}) <span class='text-yellow-bold'>Giảm ${discountPercent}%</span>`;
@@ -442,11 +432,9 @@ const datepickerLabel = document.querySelector('.datepicker-label');
 
 if(datepickerInput) {
   datepickerInput.addEventListener('focus', (e) => {
-    console.log(123);
     datepickerLabel.style.display = 'none';
   })
   datepickerInput.addEventListener('focusout', (e) => {
-    console.log(e.target.value);
     if(e.target.value.length===0) {
     }
 
@@ -499,7 +487,6 @@ if(orderStuatusBtn) {
     
     // Gọi hàm
     let orderStatus = e.target.dataset.orderstatus;
-    console.log(orderStatus)
 
     
     updateOrderStatus(orderStatus,orderid);
@@ -524,7 +511,6 @@ orderStatusBtnListList.forEach((btn)=> {
 })
 
 const orderDateTime = document.querySelector('.orderDateTime');
-console.log("🚀 ~ orderDateTime:", orderDateTime)
 const preOrderCheckBox = document.querySelector('#preOrder');
 if(preOrderCheckBox) {
     

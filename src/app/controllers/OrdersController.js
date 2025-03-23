@@ -15,7 +15,6 @@ class OrdersController {
 
  async index(req, res) {
   const filter = req.params.filter; // Lấy giá trị filter từ URL
-  console.log("🚀 ~ OrdersController ~ index ~ filter:", filter)
 
     // find all documents
 
@@ -68,13 +67,11 @@ else {
 
     
     const isGrandOpening = JSON.parse(process.env.ISGRANDOPENING);
-    console.log("🚀 ~ OrdersController ~ index ~ isGrandOpening:", typeof isGrandOpening,isGrandOpening)
 
     const priceGrandOpening = 10;
     const blackCoffeePrice = 13;
     const restCoffeePrice = 15;
     let discountPercent = Number(process.env.DISCOUNTPERCENT); // Nếu không có giảm giá thì discount = 0
-    console.log("🚀 ~ OrdersController ~ index ~ discountPercent:", discountPercent)
     let finalMoney = 0;
 
     // Tính tổng tiền từ bill
@@ -85,7 +82,6 @@ else {
         let unitPrice = 0;
     
         if(isGrandOpening) {
-          console.log('Khai trương')
           unitPrice = priceGrandOpening
         }
         else {

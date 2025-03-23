@@ -172,14 +172,13 @@ header ul li a {
 
 .imgBox {
   position: relative;
-  width: 600px;
+  max-width: 300px;
   display: flex;
   justify-content: center;
-  margin-top: -100px;
 }
 
 .imgBox img {
-  max-width: 340px;
+  max-width: 300px;
 }
 
 .thumb {
@@ -188,6 +187,7 @@ header ul li a {
   bottom: -100px;
   transform: translate(-50%);
   display: flex;
+  align-items: center;
   padding: 0;
 }
 
@@ -397,6 +397,15 @@ input:focus, textarea:focus {
   margin: 0;
 }
 
+@media screen and (max-width: 992px) {
+  section {
+    flex-direction: column;
+    padding: 30px 30px;
+  }
+  .imgBox {
+    width: unset;
+  }
+}
 @media screen and (max-width: 767.98px) {
   section {
     flex-direction: column;
