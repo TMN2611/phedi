@@ -102,10 +102,10 @@
     </script>
 
 <script>
-    const productLists = [{productNam: "Cà Phê Đen",productPrice: 10000},
-                        {productNam: "Cà Phê Sữa",productPrice: 10000},
-                        {productNam: "Cà Phê Muối",productPrice: 10000},
-                        {productNam: "Bạc Xỉu",productPrice: 10000}];
+    const productLists = [{productNam: "Cà Phê Đen",productPrice: 13000},
+                        {productNam: "Cà Phê Sữa",productPrice: 15000},
+                        {productNam: "Cà Phê Muối",productPrice: 15000},
+                        {productNam: "Bạc Xỉu",productPrice: 15000}];
 
 
     const productListElement = document.querySelector('.productList');
@@ -117,7 +117,7 @@
       return `<tr class='productItem'>
                                       <th scope="row">${index+1}</th>
                                       <td id="productName">${product.productNam}</td>
-                                      <td><input type="number" min='0' value='0' class="amount" id="amount"></td>
+                                      <td><input data-price='${product.productPrice}' type="number" min='0' value='0' class="amount" id="amount"></td>
                                       <td class='totalAmount' id='totalAmount'><span class='price'>0</span></td>
                                     </tr>`
     })
@@ -126,7 +126,8 @@
                                       <th scope="row"></th>
                                       <td></td>
                                       <td></td>
-                                      <td class='bold-text'>Tổng: <span class="finalMoney">0</span></td>
+                                      <td class='bold-text'>Tổng: <span class="finalMoney text-yellow-bold">0</span> <span class="total"></span></td>
+
                                     </tr>`)
 
     productListElement.innerHTML = html.join('')

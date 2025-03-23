@@ -11,7 +11,7 @@
 <div>
       {{> filter}}
 
-<table class="table order">
+<table class="table table-dark order  table-striped">
   <thead>
     <tr>
       <th scope="col">Ngày đặt hàng</th>
@@ -20,6 +20,7 @@
       <th scope="col">SDT</th>
       <th scope="col">Sản Phẩm</th>
       <th scope="col">Thời gian nhận</th>
+      <th scope="col">Trạng thái</th>
     </tr>
   </thead>
   <tbody>
@@ -38,6 +39,9 @@
                {{#each this.productInfor}}
                       <p>{{this.productName}}: {{this.qality}}</p>
                 {{/each}}
+                Trước giảm: <span class='text-red-bold'>{{this.total}}</span>
+                Đã giảm: <span class='text-green-bold'>{{this.amountIsReduced}}</span>
+                Tổng : <span class='text-yellow-bold'>{{this.finalPrice}}</span>
               
             </td>
 
@@ -48,8 +52,6 @@
                
 
 
-            <td>{{this.cartItemSize}}</td>
-            <td>{{this.cartItemColor}}</td>
             <td>
               <button data-orderStatus='{{this.status}}' data-orderId='{{this.orderCode}}' class='order-status-btn btn-color'>{{this.status}}</button>
             </td>

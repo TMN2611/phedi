@@ -5,7 +5,8 @@ const { numberToMoney } = require('../../util/numberToMoney')
 const moment = require('moment-timezone');
 
 const {exportTimeString} = require('../../util/time')
-  const path = require('path')
+  const path = require('path');
+const e = require("cors");
 
 
 
@@ -61,8 +62,61 @@ else {
 
         const formattedDate = `${day}/${month}/${year}`;
         order.createdAt = formattedDate
+        
       return order
     })
+
+    
+    const isGrandOpening = JSON.parse(process.env.ISGRANDOPENING);
+    console.log("🚀 ~ OrdersController ~ index ~ isGrandOpening:", typeof isGrandOpening,isGrandOpening)
+
+    const priceGrandOpening = 10;
+    const blackCoffeePrice = 13;
+    const restCoffeePrice = 15;
+    let discountPercent = Number(process.env.DISCOUNTPERCENT); // Nếu không có giảm giá thì discount = 0
+    console.log("🚀 ~ OrdersController ~ index ~ discountPercent:", discountPercent)
+    let finalMoney = 0;
+
+    // Tính tổng tiền từ bill
+    function calcOrderTotal(order, discountPercent,priceGrandOpening) {
+      let total = 0;
+    
+      order.productInfor.forEach(product => {
+        let unitPrice = 0;
+    
+        if(isGrandOpening) {
+          console.log('Khai trương')
+          unitPrice = priceGrandOpening
+        }
+        else {
+          if (product.productName === 'Cà Phê Đen') {
+            unitPrice = blackCoffeePrice;
+          } else {
+            unitPrice = restCoffeePrice;
+          }
+        }
+       
+    
+        total += unitPrice * product.qality;
+      });
+    
+      // Áp dụng giảm giá nếu có
+      let finalPrice = total;
+      if (discountPercent > 0) {
+        finalPrice = total - (total * discountPercent / 100);
+      }
+      let amountIsReduced =total - finalPrice;
+      amountIsReduced =  `${amountIsReduced.toFixed(3)} Đồng`;;
+    
+      return {total,finalPrice,amountIsReduced};
+    }
+    
+    // Giả sử allOrderList là danh sách đơn hàng
+    allOrderList = allOrderList.map(order => {
+      const {total,finalPrice,amountIsReduced} = calcOrderTotal(order, discountPercent,priceGrandOpening);
+    
+      return {...order,total,finalPrice,amountIsReduced} 
+    });
 
 
     OrderModel.watch().

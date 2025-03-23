@@ -6,37 +6,109 @@
 
 //<!-- input onchange -->
 
+  // Gọi API kiểm tra có phải giá 10k không
+  async function checkGrandOpening ()
+  {
+    let response = await fetch("api/check-isgrandOpening/", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+  });
+  
+  let data = await response.json();
+
+  
+  return data;
+  }
+
+async function checkDiscount () {
+ // Gọi API kiểm tra giảm giáapi
+ let response = await fetch("api/check-discount/", {
+  method: "POST",
+  headers: {
+      "Content-Type": "application/json",
+  },
+});
+
+let data = await response.json();
+
+let discountPercent = data.discount || 0;
+return discountPercent;
+}
+     
+
 
     const priceGrandOpening = 10;
-    const blackCoffeePrice = 12;
+    const blackCoffeePrice = 13;
     const restCoffeePrice = 15;
 
     const productList = document.querySelector('.productList')
     
     const productItemList = document.querySelectorAll('.productItem');
 
-    productItemList.forEach(function(Item){
+    productItemList.forEach( function(Item){
 
         let productAmount = Item.querySelector('input')
 
-        productAmount.addEventListener('change', function(e){
+        productAmount.addEventListener('change', async function(e){
 
-              const totalAmount = e.target.value * priceGrandOpening;
+          const data = await checkGrandOpening();
+              const isGrandOpening = JSON.parse(data.isgrandOpening);
+                console.log(isGrandOpening)
 
+              let totalAmount
+
+              const price = e.target.dataset.price;
+
+              if(isGrandOpening) {
+                 console.log('khai trương')
+                totalAmount= e.target.value * priceGrandOpening;
+              }
+              else {
+                console.log('k  khai trương')
+
+                if(price === "13000") {
+                  totalAmount= e.target.value * blackCoffeePrice;
+                }
+  
+                if(price === "15000") {
+                  totalAmount= e.target.value * restCoffeePrice;
+                }
+  
+              } 
+
+             
               const totalAmountElement = Item.querySelector('.price');
               totalAmountElement.innerHTML = totalAmount;
 
               const totalAmountList = productList.querySelectorAll('.price');
 
 
-              let finalMoney = 0;
+              let total = 0;
               totalAmountList.forEach(function(item){
 
-                finalMoney = finalMoney + Number(item.innerText);
+                total = total + Number(item.innerText);
               })
+              const discountPercent = await checkDiscount();
+              let finalPrice = 0;
+
+              if(discountPercent) {
+                finalPrice = total - ((total*discountPercent)/100)
+              }
+              else {
+                finalPrice = total
+              }
+
+
 
               const finalMoneyElement = document.querySelector('.finalMoney');
-              finalMoneyElement.innerText = `${finalMoney}`
+              console.log("🚀 ~ productAmount.addEventListener ~ finalMoneyElement:", finalMoneyElement)
+              const totalElement = document.querySelector('.total');
+              console.log("🚀 ~ productAmount.addEventListener ~ totalElement:", totalElement)
+
+              finalMoneyElement.innerText = `${finalPrice}`
+              totalElement.innerText = `${total}`
 
               
               
@@ -87,16 +159,16 @@
       
   
   
-                let finalMoney = 0;
-                bill.forEach(function(item){
+                // let finalMoney = 0;
+                // bill.forEach(function(item){
   
-                  finalMoney = finalMoney + Number(item.qality);
-                })
+                //   finalMoney = finalMoney + Number(item.qality);
+                // })
   
               
   
      
-  
+                
       // html = html.concat(`Bạn cần thanh toán ${finalMoney * priceGrandOpening}`)
   
       productBill.innerHTML = html.join('');
@@ -117,19 +189,46 @@
             let data = await response.json();
             console.log("🚀 ~ applyDiscount ~ data:", data)
     
-            let discountPercent = data.discount || 0; // Nếu không có giảm giá thì discount = 0
-            let finalMoney = 0;
+            let discountPercent = data.discount || 0; // Nếu không có giảm giá 
+            async function calcOrderTotal(bill, discountPercent,priceGrandOpening) {
+              let total = 0;
+              const data = await checkGrandOpening();
+              const isGrandOpening = JSON.parse(data.isgrandOpening);
+            
+              bill.forEach(product => {
+                let unitPrice = 0;
+            
+                if(isGrandOpening) {
+                  unitPrice = priceGrandOpening
+                }
+                else {
+                  if (product.productName === 'Cà Phê Đen') {
+                    unitPrice = blackCoffeePrice;
+                  } else {
+                    unitPrice = restCoffeePrice;
+                  }
+                }
+               
+            
+                total += unitPrice * product.qality;
+              });
+            
+              // Áp dụng giảm giá nếu có
+              let finalPrice = total;
+              if (discountPercent > 0) {
+                finalPrice = total - (total * discountPercent / 100);
+              }
+              let amountIsReduced =total - finalPrice;
+              amountIsReduced =  `${amountIsReduced.toFixed(3)} Đồng`;;
+            
+              return {total,finalPrice,amountIsReduced};
+            }
+            const {finalPrice,total,amountIsReduced} = await calcOrderTotal(bill, discountPercent,priceGrandOpening);
+            console.log("🚀 ~ applyDiscount ~ finalPrice:", finalPrice)
+            console.log("🚀 ~ applyDiscount ~ total:", total)
     
-            // Tính tổng tiền từ bill
-            bill.forEach(function(item) {
-                finalMoney += Number(item.qality);
-            });
-    
-            let discountAmount = (finalMoney * priceGrandOpening * discountPercent) / 100;
-            let totalAfterDiscount = finalMoney * priceGrandOpening - discountAmount;
-    
-            // Cập nhật hiển thị trên giao diện
-            document.getElementById("noteBill").innerHTML = `Bạn cần thanh toán ${totalAfterDiscount} (Đã giảm ${discountAmount}) <span class='text-yellow-bold'>Giảm ${discountPercent}%</span>`;
+            //Cập nhật hiển thị trên giao diện
+            document.getElementById("noteBill").innerHTML = `Bạn cần thanh toán <span class='text-yellow-bold'>${finalPrice}</span> (Đã giảm ${amountIsReduced}) <span class='text-yellow-bold'>Giảm ${discountPercent}%</span>`;
     
         } catch (error) {
             console.error("Lỗi khi gọi API giảm giá:", error);

@@ -63,7 +63,15 @@ class ApisController {
 }
 
   async isDiscount(req, res) {
-    res.json({discount:10})
+
+    const discount = process.env.DISCOUNTPERCENT;
+    res.json({discount})
+  }
+
+  async isgrandOpening(req, res) {
+
+    const isgrandOpening = process.env.ISGRANDOPENING;
+    res.json({isgrandOpening})
   }
 
 
