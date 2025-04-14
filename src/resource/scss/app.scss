@@ -1,5 +1,6 @@
 @import 'variable';
 @import 'order';
+@import 'footer';
 
 
 h1 {
@@ -496,7 +497,7 @@ input:focus, textarea:focus {
     font-weight: 700;
 }
 .text-green-bold {
-    color: $green-color;
+    color: $green-color !important;
     font-weight: 700;
 }
 .text-red-bold {

@@ -157,7 +157,7 @@ else {
                 .then((result) => {
                   
 
-                    res.json({isError:false,message:"Đặt hàng thành công, vui lòng kiểm tra email và chờ CSKH liên hệ",billID:result.orderCode});
+                    res.json({isError:false,message:"Đặt hàng thành công, Cảm ơn quý khách ạ",billID:result.orderCode});
                 })
                 .catch((err) => {
                   console.log(err)
