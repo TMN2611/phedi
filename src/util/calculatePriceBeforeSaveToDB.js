@@ -6,7 +6,7 @@ try {
 async function calculateShipPrice(data) {
 
     
-  const {address:userAdress,cartProductId} = data;     
+  const {address:userAddress,cartProductId} = data;     
 
     const pickAdress = {
         ward:"Bình Hưng Hòa B",

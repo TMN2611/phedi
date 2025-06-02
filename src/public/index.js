@@ -22,6 +22,91 @@
   return data;
   }
 
+ async function updatePriceList (e,Item) {
+  console.log(e,124)
+
+    const data = await checkGrandOpening();
+        const isGrandOpening = JSON.parse(data.isgrandOpening);
+
+        let totalAmount
+
+        const price = e.target.dataset.price;
+        console.log("🚀 ~ updatePriceList ~ price:", price)
+
+        if(isGrandOpening) {
+          totalAmount= e.target.value * priceGrandOpening;
+        }
+        else {
+
+          if(price === "13000") {
+            totalAmount= e.target.value * blackCoffeePrice;
+          }
+
+          if(price === "15000") {
+            totalAmount= e.target.value * restCoffeePrice;
+          }
+          if(price === "16000") {
+            totalAmount= e.target.value * saltCoffeePrice;
+          }
+          if(price === "20000") {
+            totalAmount= e.target.value * matchaLattePrice;
+          }
+
+        } 
+
+       
+        const totalAmountElement = Item.querySelector('.price');
+        totalAmountElement.innerHTML = totalAmount;
+
+        const totalAmountList = productList.querySelectorAll('.price');
+
+
+        let total = 0;
+        totalAmountList.forEach(function(item){
+
+          total = total + Number(item.innerText);
+        })
+
+        // const discountPercent = await checkDiscount();
+        
+        let finalPrice = 0;
+
+        function CalFinalPricePercent(discountPercent) {
+          console.log( finalPrice = total - ((total*discountPercent)/100))
+          return finalPrice = total - ((total*discountPercent)/100)
+        }
+       
+
+
+
+        const finalMoneyElement15percent = document.querySelector('.finalMoney15percent');
+        const totalElement15percent = document.querySelector('.total15percent');
+        
+        const finalMoneyElement10percent = document.querySelector('.finalMoney10percent');
+        const totalElement10percent = document.querySelector('.total10percent');
+
+        const finalMoneyElement5percent = document.querySelector('.finalMoney5percent');
+        const totalElement5percent = document.querySelector('.total5percent');
+
+        const finalPrice15percent = CalFinalPricePercent(15)
+        const finalPrice10percent = CalFinalPricePercent(10)
+        const finalPrice5percent = CalFinalPricePercent(5)
+
+        finalMoneyElement15percent.innerText = `${finalPrice15percent}`
+        totalElement15percent.innerText = `${total}`
+
+        finalMoneyElement10percent.innerText = `${finalPrice10percent}`
+        totalElement10percent.innerText = `${total}`
+
+        finalMoneyElement5percent.innerText = `${finalPrice5percent}`
+        totalElement5percent.innerText = `${total}`
+
+        
+        
+
+  
+ } 
+
 async function checkDiscount () {
  // Gọi API kiểm tra giảm giáapi
  let response = await fetch("api/check-discount/", {
@@ -34,7 +119,9 @@ async function checkDiscount () {
 let data = await response.json();
 
 let discountPercent = data.discount || 0;
+
 return discountPercent;
+
 }
      
 
@@ -42,6 +129,8 @@ return discountPercent;
     const priceGrandOpening = 10;
     const blackCoffeePrice = 13;
     const restCoffeePrice = 15;
+    const saltCoffeePrice = 16;
+    const matchaLattePrice = 20;
 
     const productList = document.querySelector('.productList')
     
@@ -51,64 +140,9 @@ return discountPercent;
 
         let productAmount = Item.querySelector('input')
 
-        productAmount.addEventListener('change', async function(e){
-
-          const data = await checkGrandOpening();
-              const isGrandOpening = JSON.parse(data.isgrandOpening);
-
-              let totalAmount
-
-              const price = e.target.dataset.price;
-
-              if(isGrandOpening) {
-                totalAmount= e.target.value * priceGrandOpening;
-              }
-              else {
-
-                if(price === "13000") {
-                  totalAmount= e.target.value * blackCoffeePrice;
-                }
-  
-                if(price === "15000") {
-                  totalAmount= e.target.value * restCoffeePrice;
-                }
-  
-              } 
-
-             
-              const totalAmountElement = Item.querySelector('.price');
-              totalAmountElement.innerHTML = totalAmount;
-
-              const totalAmountList = productList.querySelectorAll('.price');
-
-
-              let total = 0;
-              totalAmountList.forEach(function(item){
-
-                total = total + Number(item.innerText);
-              })
-              const discountPercent = await checkDiscount();
-              let finalPrice = 0;
-
-              if(discountPercent) {
-                finalPrice = total - ((total*discountPercent)/100)
-              }
-              else {
-                finalPrice = total
-              }
-
-
-
-              const finalMoneyElement = document.querySelector('.finalMoney');
-              const totalElement = document.querySelector('.total');
-
-              finalMoneyElement.innerText = `${finalPrice}`
-              totalElement.innerText = `${total}`
-
-              
-              
-
-        })     
+        productAmount.addEventListener('change', function(e) {
+          updatePriceList(e, Item);
+      });
 
     })
 
@@ -117,7 +151,22 @@ return discountPercent;
   const userNameElement = document.querySelector('#userName');
   const userPhoneNumberElement = document.querySelector('#userPhoneNumber');
   const userInfor = JSON.parse(localStorage.getItem('userInfor'));
+  const userNote = JSON.parse(localStorage.getItem('userNote'));
+  const userAddress = JSON.parse(localStorage.getItem('userAddress')) || "";
+  console.log("🚀 ~ userAddress:", userAddress)
   const bill = JSON.parse(localStorage.getItem('bill'));
+
+  const userNoteElement = document.querySelector('#userNote');
+  if(userNoteElement) {
+    userNoteElement.innerText = userNote
+
+  }
+
+  const userAddressElement = document.querySelector('#userAddress');
+  if(userAddressElement) {
+    userAddressElement.value = `${userAddress}`;
+
+  }
 
   const BillIDStorageValue = localStorage.getItem('billID')
   let billID;
@@ -171,54 +220,27 @@ return discountPercent;
 
       async function applyDiscount(bill) {
         try {
+            let billID = localStorage.getItem("billID");
             // Gọi API kiểm tra giảm giáapi
             let response = await fetch("api/check-discount/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
+                body: JSON.stringify({ billID: billID }),
             });
     
             let data = await response.json();
+            console.log("🚀 ~ applyDiscount ~ data:", data)
     
             let discountPercent = data.discount || 0; // Nếu không có giảm giá 
-            async function calcOrderTotal(bill, discountPercent,priceGrandOpening) {
-              let total = 0;
-              const data = await checkGrandOpening();
-              const isGrandOpening = JSON.parse(data.isgrandOpening);
-            
-              bill.forEach(product => {
-                let unitPrice = 0;
-            
-                if(isGrandOpening) {
-                  unitPrice = priceGrandOpening
-                }
-                else {
-                  if (product.productName === 'Cà Phê Đen') {
-                    unitPrice = blackCoffeePrice;
-                  } else {
-                    unitPrice = restCoffeePrice;
-                  }
-                }
-               
-            
-                total += unitPrice * product.qality;
-              });
-            
-              // Áp dụng giảm giá nếu có
-              let finalPrice = total;
-              if (discountPercent > 0) {
-                finalPrice = total - (total * discountPercent / 100);
-              }
-              let amountIsReduced =total - finalPrice;
-              amountIsReduced =  `${amountIsReduced.toFixed(3)} Đồng`;;
-            
-              return {total,finalPrice,amountIsReduced};
-            }
-            const {finalPrice,total,amountIsReduced} = await calcOrderTotal(bill, discountPercent,priceGrandOpening);
+            let oldPrice = data.oldPrice; // Nếu không có giảm giá 
+            let finalPrice = data.finalPrice; // Nếu không có giảm giá 
+            let isReducedPrice = data.isReducedPrice; // Nếu không có giảm giá 
+           
     
             //Cập nhật hiển thị trên giao diện
-            document.getElementById("noteBill").innerHTML = `Bạn cần thanh toán <span class='text-yellow-bold'>${finalPrice}</span> (Đã giảm ${amountIsReduced}) <span class='text-yellow-bold'>Giảm ${discountPercent}%</span>`;
+            document.getElementById("noteBill").innerHTML = `Bạn cần thanh toán <span class='text-yellow-bold'>${finalPrice}</span> (Đã giảm ${isReducedPrice}) <span class='text-yellow-bold'>Giảm ${discountPercent}%</span>`;
     
         } catch (error) {
             console.error("Lỗi khi gọi API giảm giá:", error);
@@ -272,7 +294,8 @@ return discountPercent;
         const datepicker = document.querySelector('#datepicker').value
         const timepicker = document.querySelector('#timepicker').value
  
-        const userAddress = document.querySelector('#userAdress').value
+        const userAddress = document.querySelector('#userAddress').value
+        console.log("🚀 ~ orderBtn.addEventListener ~ userAddress:", userAddress)
 
         const userNote = document.querySelector('#userNote').value
 
@@ -350,8 +373,10 @@ return discountPercent;
                   note: userNote,
                   datepicker,
                   timepicker,
-                  isPreOrder
+                  isPreOrder,
+                  userAddress
               };
+              console.log(orderData)
       
               function order(orderData) {
                   fetch('/2205/handle-order', {
@@ -369,7 +394,11 @@ return discountPercent;
                           window.location.pathname = '/home';
                           localStorage.setItem('bill', JSON.stringify(productInfor));
                           localStorage.setItem('userInfor', JSON.stringify(userInfor));
+                          localStorage.setItem('userNote', JSON.stringify(userNote));
+                          localStorage.setItem('userAddress', JSON.stringify(userAddress));
+                          localStorage.setItem('timepicker', JSON.stringify(timepicker));
                           localStorage.setItem('billID', JSON.stringify(response.billID));
+                          localStorage.setItem('discountPercent', JSON.stringify(response.discountPercent));
                       }
                   });
               }
@@ -547,14 +576,164 @@ if(billIDcopyEmlement) {
 }
 
 
-document.getElementById("timepicker").addEventListener("change", function() {
-  let selectedTime = this.value; // Lấy giá trị giờ đã chọn
-  let minTime = "06:00";
-  let maxTime = "09:00";
+const timepickerElement = document.getElementById("timepicker");
+if(timepickerElement) {
+  timepickerElement.addEventListener("change", function() {
+    let selectedTime = this.value; // Lấy giá trị giờ đã chọn
+    let minTime = "06:00";
+    let maxTime = "09:00";
+  
+    if (selectedTime < minTime) {
+        this.value = minTime;
+    } else if (selectedTime > maxTime) {
+        this.value = maxTime;
+    }
+  });
+}
 
-  if (selectedTime < minTime) {
-      this.value = minTime;
-  } else if (selectedTime > maxTime) {
-      this.value = maxTime;
+
+
+
+
+// const priceGrandOpening = 10;
+// const blackCoffeePrice = 13;
+// const restCoffeePrice = 15;
+// const saltCoffeePrice = 16;
+// const matchaLattePrice = 20;
+async function isGrandOpening () {
+  const data = await checkGrandOpening();
+  const isgrandOpeningData = await JSON.parse(data.isgrandOpening)
+  return isgrandOpeningData
+
+}
+
+
+productItemList.forEach(async function(item){
+  const productNameElement = item.querySelector('#productName');
+  const totalAmountElement = item.querySelector('#totalAmount');
+
+  const productNameValue =  productNameElement.innerText.trim();
+  const isGrandOpeningValue = await isGrandOpening();
+
+
+  if(bill) {
+    bill.forEach(function (oldItem){
+      if(productNameValue === oldItem.productName) {
+        const ItemAmount = item.querySelector('#amount');
+        const ItemPrice = item.querySelector('.price');
+        const productPrice =  ItemAmount.dataset.price;
+        ItemAmount.value = oldItem.qality;
+        if(isGrandOpeningValue) {
+          ItemPrice.innerText = oldItem.qality*10
+        }
+        else {
+          ItemPrice.innerText = (oldItem.qality*ItemAmount.dataset.price)/1000
+
+        }
+        function loadFinalMoney() {
+          const totalAmountList = document.querySelectorAll('.price');
+        
+          let total = 0;
+        
+          totalAmountList.forEach(item => {
+            const price = Number(item.innerText) || 0;
+            total += price;
+          });
+        
+          // Hàm tính tiền sau giảm
+          function calculateFinalPrice(total, discountPercent) {
+            return total - (total * discountPercent / 100);
+          }
+        
+          const finalPrices = {
+            15: calculateFinalPrice(total, 15),
+            10: calculateFinalPrice(total, 10),
+            5: calculateFinalPrice(total, 5)
+          };
+        
+          // Cập nhật UI
+          document.querySelector('.finalMoney15percent').innerText = finalPrices[15].toFixed(0);
+          document.querySelector('.total15percent').innerText = total.toFixed(0);
+        
+          document.querySelector('.finalMoney10percent').innerText = finalPrices[10].toFixed(1);
+          document.querySelector('.total10percent').innerText = total.toFixed(0);
+        
+          document.querySelector('.finalMoney5percent').innerText = finalPrices[5].toFixed(1);
+          document.querySelector('.total5percent').innerText = total.toFixed(1);
+        }
+        loadFinalMoney()
+        
+      }
+  })
+  }
+
+  
+})
+
+document.addEventListener('DOMContentLoaded', function () {
+  const datepickerInput = document.querySelector('#datepicker');
+  if (datepickerInput) {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    const day = String(tomorrow.getDate()).padStart(2, '0');
+    const month = String(tomorrow.getMonth() + 1).padStart(2, '0'); // JS month starts from 0
+    const year = tomorrow.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
+    datepickerInput.value = formattedDate;
   }
 });
+
+ // Gán lại nếu có sẵn trong localStorage
+ const timeInput = document.getElementById('timepicker');
+ if(timeInput) {
+  window.addEventListener('DOMContentLoaded', function () {
+    const savedTime = localStorage.getItem('timepicker');
+    console.log("🚀 ~ savedTime:", savedTime)
+    if (savedTime) {
+      timeInput.value = savedTime;
+    }
+    console.log(timeInput.value);
+  });
+     
+ }
+
+
+
+ 
+
+console.log(userInfor)
+if(userInfor) {
+  getCurrentPoints(userInfor.userPhoneNumber)
+}
+ async function getCurrentPoints(phoneNumber) {
+  try {
+    const response = await fetch('/api/get-current-points', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ phone: phoneNumber }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("Số điểm hiện tại:", data.availablePoints);
+      // Cập nhật UI nếu muốn
+      const currentPointDisplayElement = document.querySelector('#currentPointDisplay')
+      if(currentPointDisplayElement) {
+        currentPointDisplayElement.innerText = `${data.availablePoints} điểm`;
+      }
+      return data.availablePoints;
+    } else {
+      alert(data.message || "Có lỗi xảy ra khi lấy điểm.");
+    }
+  } catch (error) {
+    console.error("Lỗi khi gọi API getCurrentPoints:", error);
+    alert("Không thể kết nối máy chủ.");
+  }
+}
+

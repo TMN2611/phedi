@@ -25,6 +25,7 @@ var Order = mongoose.Schema(
     note:String,
     status:{type:String,default:'notDone'},
     isPreOrder: Boolean,
+    oldPrice:Number,
 
     
   },

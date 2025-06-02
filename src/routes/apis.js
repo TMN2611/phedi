@@ -12,6 +12,11 @@ router.post('/check-isgrandOpening/', ApisController.isgrandOpening);
 
 router.post('/check-discount/', ApisController.isDiscount);
 
+router.post('/get-current-points/', ApisController.getCurrentPoints);
+
+router.post('/doidiem/', ApisController.doidiem);
+
+router.post('/check-user', ApisController.checkUser);
 
 
 

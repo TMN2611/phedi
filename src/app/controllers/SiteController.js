@@ -6,9 +6,9 @@ class SiteController {
     res.render('home',{DISCOUNTPERCENT});
   }
 
-  // [GET] /search
-  search(req, res) {
-    res.render('search');
+  // [GET] /doidiem
+  doidiem(req, res) {
+    res.render('doidiem');
   }
 }
 

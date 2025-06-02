@@ -39,9 +39,10 @@
                {{#each this.productInfor}}
                       <p>{{this.productName}}: {{this.qality}}</p>
                 {{/each}}
-                Trước giảm: <span class='text-red-bold'>{{this.total}}</span>
-                Đã giảm: <span class='text-green-bold'>{{this.amountIsReduced}}</span>
-                Tổng : <span class='text-yellow-bold'>{{this.finalPrice}}</span>
+                <span class='text-red-bold'>{{this.total}}k</span>
+                - <span class='text-green-bold'>{{this.amountIsReduced}}</span>
+                = <span class='text-yellow-bold'>{{this.finalPrice}}k</span> 
+                <span class='text-yellow-bold'>Giảm ({{this.discount}}%)</span>
               
             </td>
 
@@ -54,6 +55,10 @@
 
             <td>
               <button data-orderStatus='{{this.status}}' data-orderId='{{this.orderCode}}' class='order-status-btn btn-color'>{{this.status}}</button>
+
+              <p>
+                {{this.note}}</button>
+              </p>
             </td>
 
         </tr>

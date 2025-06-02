@@ -2,6 +2,32 @@
 @import 'order';
 @import 'footer';
 
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-Thin.woff2') format('woff2'); font-weight: 100; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-ThinItalic.woff2') format('woff2'); font-weight: 100; font-style: italic; font-display: swap; }
+
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-ExtraLight.woff2') format('woff2'); font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-ExtraLightItalic.woff2') format('woff2'); font-weight: 200; font-style: italic; font-display: swap; }
+
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-Light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-LightItalic.woff2') format('woff2'); font-weight: 300; font-style: italic; font-display: swap; }
+
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-MediumItalic.woff2') format('woff2'); font-weight: 500; font-style: italic; font-display: swap; }
+
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-SemiBoldItalic.woff2') format('woff2'); font-weight: 600; font-style: italic; font-display: swap; }
+
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-BoldItalic.woff2') format('woff2'); font-weight: 700; font-style: italic; font-display: swap; }
+
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-ExtraBold.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-ExtraBoldItalic.woff2') format('woff2'); font-weight: 800; font-style: italic; font-display: swap; }
+
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-Black.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Prompt'; src: url('/fonts/Prompt-BlackItalic.woff2') format('woff2'); font-weight: 900; font-style: italic; font-display: swap; }
 
 h1 {
   font-size: 30px;
@@ -16,7 +42,10 @@ h1 {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Prompt', serif;
+  // font-family: 'Prompt', serif;
+}
+html {
+
 }
 section{
   position: relative;
@@ -90,21 +119,25 @@ header ul li a{
   margin-bottom: 25px;
   padding: 8px 20px;
   background: #FFB22C;
-  color: #fff;
+  color: black;
   border-radius: 40px;
-  font-weight: 500;
+  font-weight: 900;
   letter-spacing: 1px;
   text-decoration: none;
   border:none;
+  border:2px solid ;
+
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
-}
-.orderBtn {
-  font-weight: 600;
-  border:2px solid ;
 
+  animation: blink 1s infinite;
 }
+@keyframes blink {
+  0%, 100% { opacity: 1;    padding-inline: 20px; }
+  50% { opacity: 0.9;    padding-inline: 25px; }
+}
+
 .orderBtn:hover {
   cursor: pointer;
   border:2px solid #FFB22C;
@@ -113,7 +146,7 @@ header ul li a{
   transition: linear 0.2s;
 }
 .totalAmount span {
-  line-height:35px;
+  line-height:25px;
 }
 
 .imgBox{
@@ -176,8 +209,13 @@ header ul li a{
   background:#ffc145;
   clip-path: circle(600px at right 800px);
 }
+.qr-wrap {
+}
+.qr-element {
+  text-align: center;
+}
 .momo-qr {
-  width: 300px;
+  width: 200px;
 }
 textarea {
   width: 100%;
@@ -243,8 +281,8 @@ input:focus, textarea:focus {
 
 
 .totalAmount {
-  display:flex;
-  gap:10px;
+  // display:flex;
+  // gap:10px;
 }
 
 
@@ -328,11 +366,23 @@ input:focus, textarea:focus {
   width: 270px;
 }
 .orderBtnWrapper {
-  display: flex;
-  justify-content: space-between;
+  display: block;
 }
 .textBox h2 {
   margin-bottom: 30px;
+}
+.datepicker {
+  outline: none;
+}
+#datepicker {
+  outline: none;
+border: 1px solid #ced4da;
+max-width: 150px;
+
+
+}
+.timepicker {
+  min-width:150px;
 }
 
 #noteBill {
@@ -374,7 +424,11 @@ input:focus, textarea:focus {
     font-size: 14px;
   }
   .content {
-    margin-top: 200px;
+    margin-top: 250px;
+    flex-direction: column;
+  }
+  .thumb li {
+    margin:0 10px;
   }
   .payment  th {
     font-size:12px
@@ -397,7 +451,7 @@ input:focus, textarea:focus {
   }
   .orderBtnWrapper {
     display: block;
-    text-align: right;
+    text-align: left;
   }
   .momo-qr {
     margin-top: 10px;
@@ -522,3 +576,75 @@ input:focus, textarea:focus {
   background-color: black;
   transform: translateY(-50%);
 }
+#currentPointDisplay {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #2a9d8f; /* màu xanh ngọc */
+  background-color: #e0f7f5; /* nền nhẹ */
+  padding: 6px 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(42, 157, 143, 0.4);
+  display: inline-block;
+  min-width: 40px;
+  text-align: center;
+}
+
+#currentPointDisplayWrapper {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+  color: #264653;
+}
+.redeem-info {
+  font-style: italic;
+  color: #e76f51; /* màu cam ấm */
+  font-weight: 600;
+  margin-top: 4px;
+  font-size: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  // Trên mobile thì xếp dọc và căn giữa
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+}
+
+.logo {
+  max-width: 180px;
+
+  @media screen and (max-width: 500px) {
+    max-width: 140px; // nhỏ lại trên mobile
+  }
+}
+
+#currentPointDisplayWrapper {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+  color: #264653; // Màu xanh đậm hiện tại
+
+  // Điều chỉnh màu sắc và background hài hòa với màu chủ đạo (vàng cam)
+  background-color: #fff7e6; // màu nền vàng nhạt nhẹ
+  color: #d97904; // màu cam đậm hơn để nổi bật hơn
+  border: 1.5px solid #FFB22C; // viền màu vàng cam
+  padding: 6px 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(255, 178, 44, 0.3); // đổ bóng vàng nhẹ
+
+  display: inline-block;
+  min-width: 50px;
+  text-align: center;
+
+  @media screen and (max-width: 500px) {
+    font-size: 1rem;
+    min-width: 40px;
+    padding: 5px 10px;
+  }
+}
+

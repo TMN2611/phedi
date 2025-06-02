@@ -7,7 +7,14 @@
                 <li><a href="">Menu</a></li>
                 <li><a href="">Mới</a></li>
                 <li><a href="">Liên hệ</a></li>
+
             </ul> --}}
+
+            <div id='PointContent'>
+              <p id='currentPointDisplayWrapper'>Điểm tích lũy: <span id="currentPointDisplay">0</span></p>
+              <p class="redeem-info">Đủ 150 điểm đổi 1 ly bất kỳ trong menu</p>
+            </div>
+           
         </header>
         <div class="content">
 
@@ -15,7 +22,7 @@
             <div class="textBox">
                 <form action="">
                 <h2 class=''>ĐẶT TRƯỚC. NHẬN NGAY TRONG <span> <br>5 Giây</span></h2>
-                  <h2 class=''><span>GIẢM 10%</span> KHI ĐẶT TRƯỚC QUA <span> <br>PHEDI.SHOP</span></h2>
+                  <h2 class=''><span>GIẢM GIÁ NGẪU NHIÊN 5 ĐẾN 15%</span> KHI ĐẶT TRƯỚC QUA <span> <br>PHEDI.SHOP</span></h2>
                   
 
                 <div style='gap:10px' class="d-flex justify-content-between">
@@ -37,16 +44,16 @@
                     </label>
                   </div>
                 <div class='orderDateTime active'>
-                   <div style='gap:10px' class="d-flex justify-content-between">
-                  <div class="form-floating mb-2">
-                    <input  class="p-3" id="datepicker" width="" />
+                   <div style='gap:0px' class="d-flex justify-content-between">
+                  <div class="form-floating mb-2 datepicker">
+                    <input  class="p-3" id="datepicker" width="100px" />
                     
-                    <label class='datepicker-label' for="datepicker">Ngày nhận</label>
+                    {{!-- <label class='datepicker-label' for="datepicker">Ngày nhận</label> --}}
 
 
 
                     </div>
-                 <div class="form-floating mb-2">
+                 <div class="form-floating mb-2 timepicker">
                     <input id="timepicker" type="time" class="form-control" min="06:00" max="09:00" required />
                     <label for="timepicker">Giờ nhận</label>
                 </div>
@@ -60,7 +67,7 @@
                  
 
               <div class="form-floating mb-2">
-                    <input type="email" class="form-control" id="userAdress" placeholder="">
+                    <input type="email" class="form-control" id="userAddress" placeholder="">
                     <label for="userName">Địa chỉ</label>
                         </div>
                           <div class="alert alert-warning small-text" role="alert">
@@ -128,7 +135,7 @@
                               <div class="orderBtnWrapper">
 
                                 <div>
-                                    <div class="orderBtn">Đặt ngay</div>
+                                    <div class="orderBtn">ĐẶT NGAY-GIẢM GIÁ 5 đến 15%</div>
                                 </div>
 
                                 <div>
@@ -138,7 +145,39 @@
                                        <p id='productBill'></p>
                                        <p id='noteBill'></p>
 
-                                        <img src="./img/momo-qr.jpg" alt="" class="momo-qr">
+                                        <div class="qr-wrap">
+                                          <div class="qr-element">
+                                            <img src="./img/momo-qr.jpg" alt="" class="momo-qr">
+
+                                          <a href="./img/momo-qr.jpg" download="qr-thanh-toan.png">
+                                             <div style="text-align: center;">
+  <a href="/images/qr.png" download="qr-thanh-toan.png" style="text-decoration: none;">
+    <div style="background-color: #D82D88; color: white; padding: 10px 20px; border-radius: 8px; text-align: center; width: fit-content; margin: auto;">
+      Tải mã QR về máy
+    </div>
+  </a>
+</div>
+
+                                                </a>
+
+
+                                          </div>
+                                          <div class="qr-element">
+                                            <img src="./img/vcb-qr.jpg" alt="" class="momo-qr">
+                                          </div>
+
+                                          <a href="./img/momo-qr.jpg" download="qr-thanh-toan.png">
+                                             <div style="text-align: center;">
+  <a href="/images/qr.png" download="qr-thanh-toan.png" style="text-decoration: none;">
+    <div style="background-color: #b829e5; color: white; padding: 10px 20px; border-radius: 8px; text-align: center; width: fit-content; margin: auto;">
+      Tải mã QR về máy
+    </div>
+  </a>
+                                        </div>
+                                            
+
+
+                                       
 
                                         <input type="hidden" id="discountPercent" value='{{this.DISCOUNTPERCENT}}'>
                                 </div>
@@ -157,12 +196,12 @@
                 </form>
             </div>
             <div class="imgBox">
-                <img src="./img/img1.png" class="starbucks">
+                <img src="./img/img1.webp" class="starbucks">
                 <ul class="thumb">
-                    <li><p href="."><img src="./img/thumb1.png" onclick="imgSlider('./img/img1.png'); changeCircleColor('#000000') " ></p></li>
-                    <li><p href="."><img src="./img/thumb2.png" onclick="imgSlider('./img/img2.png'); changeCircleColor('#854836') " ></p></li>
-                    <li><p href="."><img src="./img/thumb3.png" onclick="imgSlider('./img/img3.png',15); changeCircleColor('#FFB22C') " ></p></li>
-                    <li><p href="."><img src="./img/thumb4.png" onclick="imgSlider('./img/img4.png',15); changeCircleColor('#FFB22C') " ></p></li>
+                    <li><p href="."><img src="./img/thumb1.webp" onclick="imgSlider('./img/img1.webp'); changeCircleColor('#000000') " ></p></li>
+                    <li><p href="."><img src="./img/thumb2.webp" onclick="imgSlider('./img/img2.webp'); changeCircleColor('#854836') " ></p></li>
+                    <li><p href="."><img src="./img/thumb3.webp" onclick="imgSlider('./img/img3.webp',15); changeCircleColor('#FFB22C') " ></p></li>
+                    <li><p href="."><img src="./img/thumb4.webp" onclick="imgSlider('./img/img4.webp',15); changeCircleColor('#FFB22C') " ></p></li>
                 </ul>
             </div>
             
@@ -203,7 +242,7 @@
           </li>
           <li class="complete">Bước 5: Nhận hàng
             <div class="progressbar-content">
-              <p>Bạn đến điểm bán ở dưới bản đồ địa chỉ là "" để nhận hàng</p>
+              <p>Bạn đến điểm bán ở dưới bản đồ địa chỉ là "55 Đại lộ Bình Dương, Vĩnh Phú, Thuận An, Bình Dương, Việt Nam" để nhận hàng</p>
             </div>
           </li>
         </ul>
@@ -427,7 +466,21 @@
 
 
     <div class="google-map">
-   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.7478447687668!2d106.70624097363697!3d10.906758156779043!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d790f9d2b5df%3A0x2f8303b0283f4a2!2zxJAuIEzDoWkgVGhpw6p1IDQ5LCBMw6FpIFRoacOqdSwgVGh14bqtbiBBbiwgQsOsbmggRMawxqFuZywgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1741659965733!5m2!1svi!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<p>📍 55 Đại lộ Bình Dương, Vĩnh Phú, Thuận An, Bình Dương, Việt Nam</p>
+
+<iframe
+  src="https://www.google.com/maps?q=10.9424773,106.7081793&z=17&output=embed"
+  width="100%"
+  height="450"
+  style="border:0;"
+  allowfullscreen=""
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+
+
+
+
 </div>
 
 

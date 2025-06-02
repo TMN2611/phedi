@@ -70,48 +70,21 @@ else {
 
     const priceGrandOpening = 10;
     const blackCoffeePrice = 13;
+    const saltCoffeePrice = 16;
+    const matchaLattePrice = 20;
     const restCoffeePrice = 15;
-    let discountPercent = Number(process.env.DISCOUNTPERCENT); // Nếu không có giảm giá thì discount = 0
+
+    // let discountPercent = Number(process.env.DISCOUNTPERCENT); // Nếu không có giảm giá thì discount = 0
     let finalMoney = 0;
 
-    // Tính tổng tiền từ bill
-    function calcOrderTotal(order, discountPercent,priceGrandOpening) {
-      let total = 0;
-    
-      order.productInfor.forEach(product => {
-        let unitPrice = 0;
-    
-        if(isGrandOpening) {
-          unitPrice = priceGrandOpening
-        }
-        else {
-          if (product.productName === 'Cà Phê Đen') {
-            unitPrice = blackCoffeePrice;
-          } else {
-            unitPrice = restCoffeePrice;
-          }
-        }
-       
-    
-        total += unitPrice * product.qality;
-      });
-    
-      // Áp dụng giảm giá nếu có
-      let finalPrice = total;
-      if (discountPercent > 0) {
-        finalPrice = total - (total * discountPercent / 100);
-      }
-      let amountIsReduced =total - finalPrice;
-      amountIsReduced =  `${amountIsReduced.toFixed(3)} Đồng`;;
-    
-      return {total,finalPrice,amountIsReduced};
-    }
-    
+   
     // Giả sử allOrderList là danh sách đơn hàng
     allOrderList = allOrderList.map(order => {
-      const {total,finalPrice,amountIsReduced} = calcOrderTotal(order, discountPercent,priceGrandOpening);
-    
-      return {...order,total,finalPrice,amountIsReduced} 
+      const discountPercent = order.discount;
+      const oldPrice = order.oldPrice;
+      const finalPrice = order.finalPrice;
+      const amountIsReduced = (order.oldPrice - order.finalPrice)*1000;
+      return {...order,total:oldPrice,finalPrice,amountIsReduced:amountIsReduced.toFixed(0)} 
     });
 
 
@@ -130,14 +103,54 @@ else {
           timepicker,isPreOrder} = req.body;
    
               let finalMoney = 0;
+
+              console.log(productInfor)
               
+            
               const priceGrandOpening = 10;
-              const blackCoffeePrice = 12;
+              const blackCoffeePrice = 13;
               const restCoffeePrice = 15;
+              const saltCoffeePrice = 16;
+              const matchaLattePrice = 20;
+
+              const isGrandOpening = JSON.parse(process.env.ISGRANDOPENING);
+      
            
               productInfor.forEach(function(item){
-                finalMoney = finalMoney + (item.qality*priceGrandOpening);
+                if(isGrandOpening) {
+                  finalMoney = finalMoney + (item.qality*priceGrandOpening);
+                }
+                else {
+                  if (item.productName === 'Cà Phê Đen') {
+                    finalMoney += item.qality * blackCoffeePrice;
+                  } else if (item.productName === 'Cà Phê Sữa') {
+                    finalMoney += item.qality * restCoffeePrice;
+                  } else if (item.productName === 'Bạc Xỉu') {
+                    finalMoney += item.qality * restCoffeePrice; // nếu Bạc Sỉu cũng giá như muối
+                  } else if (item.productName === 'Cà Phê Muối') {
+                    finalMoney += item.qality * saltCoffeePrice;
+                  } else if (item.productName === 'Matcha Latte') {
+                    finalMoney += item.qality * matchaLattePrice;
+                  } else {
+                    console.warn('Sản phẩm không xác định:', item.productName);
+                  }
+                }
               })
+
+              function getRandomDiscountPercent() {
+                const random = Math.random();
+                if (random < 0.3) return 15;
+                if (random < 0.7) return 10;
+                return 5;
+              }
+              
+              const oldPrice = finalMoney;
+              let discountPercent =   getRandomDiscountPercent();
+              if(process.env.NODISCOUNT === "true") {
+                discountPercent = 0;
+              }
+              console.log(discountPercent);
+              finalMoney = finalMoney - (finalMoney * discountPercent / 100);
              
               
               const dataForSave = {
@@ -148,7 +161,10 @@ else {
                 datepicker,
                 timepicker,     
                 isPreOrder,
+                discount:discountPercent,
+                oldPrice
               }
+              console.log(dataForSave)
 
            
 
@@ -157,7 +173,13 @@ else {
                 .then((result) => {
                   
 
-                    res.json({isError:false,message:"Đặt hàng thành công, Cảm ơn quý khách ạ",billID:result.orderCode});
+                    if(discountPercent > 0) {
+                      res.json({isError:false,message:`QUÝ KHÁCH ĐÃ NHẬN MÃ GIẢM GIÁ ${discountPercent}% cho đơn hàng này ❤️ Cảm ơn quý khách ạ 😍`,billID:result.orderCode,discountPercent});
+                    }
+                    else {
+                      res.json({isError:false,message:"Đặt hàng thành công, Cảm ơn quý khách ạ",billID:result.orderCode,discountPercent});
+                    }
+                   
                 })
                 .catch((err) => {
                   console.log(err)
