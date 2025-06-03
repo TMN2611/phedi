@@ -98,8 +98,9 @@ async isDiscount(req, res) {
     const { phone } = req.body;
   
     try {
-      const orders = await OrderModel.find({ "userInfor.userPhoneNumber": phone });
+      const orders = await OrderModel.find({ "userInfor.userPhoneNumber": phone, status:'Done' });
       const history = await PointHistoryModel.find({ "phone": phone });
+      console.log("🚀 ~ ApisController ~ getCurrentPoints ~ orders:", orders)
   
       const totalPoints = orders.reduce((sum, order) => sum + (order.discount || 0), 0);
       const usedPoints = history.reduce((sum, item) => sum + (item.usedPoints || 0), 0);
@@ -116,7 +117,7 @@ async isDiscount(req, res) {
     const { phone, reason } = req.body;
     console.log("🚀 ~ ApisController ~ doidiem ~ phone:", phone)
     try {
-      const orders = await OrderModel.find({ "userInfor.userPhoneNumber": phone });
+      const orders = await OrderModel.find({ "userInfor.userPhoneNumber": phone, status:"Done" });
 
       const history = await PointHistoryModel.find({ "phone": phone });
   
@@ -161,7 +162,7 @@ async checkUser(req, res) {
       return res.status(400).json({ message: 'Thiếu số điện thoại' });
     }
 
-    const order = await OrderModel.findOne({ "userInfor.userPhoneNumber": phone });
+    const order = await OrderModel.findOne({ "userInfor.userPhoneNumber": phone, status:'Done' });
 
     if (!order) {
       return res.status(404).json({ message: 'Không tìm thấy khách hàng' });
