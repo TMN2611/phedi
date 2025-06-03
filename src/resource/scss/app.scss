@@ -648,3 +648,21 @@ header {
   }
 }
 
+
+.status-label {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 8px!important;
+  font-weight: bold;
+  color: white;
+}
+
+.status-done {
+  background-color: #28a745; /* Màu xanh lá */
+}
+
+.status-notdone {
+  background-color: #070803; /* Màu đỏ */
+}
+

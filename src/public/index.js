@@ -188,7 +188,8 @@ return discountPercent;
   
       
       if(billID) {
-        billIDElement.innerHTML = `Mã đơn hàng: <span class='billIDcontent'>${billID} <span class='billIDcopy'><i class="fa-regular fa-copy"></i> </span></span>`
+        billIDElement.innerHTML = `
+        Mã đơn hàng: <span class='billIDcontent'>${billID} <span class='billIDcopy'><i class="fa-regular fa-copy"></i> </span></span>`
       }
   
   
@@ -237,10 +238,23 @@ return discountPercent;
             let oldPrice = data.oldPrice; // Nếu không có giảm giá 
             let finalPrice = data.finalPrice; // Nếu không có giảm giá 
             let isReducedPrice = data.isReducedPrice; // Nếu không có giảm giá 
-           
+            let status = data.status; // <--- lấy trạng thái từ API
     
             //Cập nhật hiển thị trên giao diện
             document.getElementById("noteBill").innerHTML = `Bạn cần thanh toán <span class='text-yellow-bold'>${finalPrice}</span> (Đã giảm ${isReducedPrice}) <span class='text-yellow-bold'>Giảm ${discountPercent}%</span>`;
+
+
+            const statusDisplay = document.querySelector("#orderStatusDisplay");
+if (statusDisplay) {
+  if (status === "Done") {
+    statusDisplay.innerText = "Đã hoàn thành";
+    statusDisplay.className = "status-label status-done";
+  } else {
+    statusDisplay.innerText = "Đang chuẩn bị";
+    statusDisplay.className = "status-label status-notdone";
+  }
+}
+
     
         } catch (error) {
             console.error("Lỗi khi gọi API giảm giá:", error);

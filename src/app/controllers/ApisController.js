@@ -80,7 +80,7 @@ async isDiscount(req, res) {
     }
     const isReducedPrice = (order.oldPrice - order.finalPrice)*1000
 
-    res.json({ discount: order.discount || 0 , oldPrice:order.oldPrice, finalPrice:order.finalPrice,isReducedPrice:isReducedPrice.toFixed(0)});
+    res.json({ discount: order.discount || 0 , oldPrice:order.oldPrice, finalPrice:order.finalPrice,isReducedPrice:isReducedPrice.toFixed(0),status:order.status});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
